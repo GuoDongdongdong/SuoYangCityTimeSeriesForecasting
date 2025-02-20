@@ -1,0 +1,7 @@
+.vscode
+/dataset
+/log
+/temp
+/TIEGAN_dataset
+**/__pycache__
+temp.py
