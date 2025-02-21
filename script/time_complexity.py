@@ -22,10 +22,10 @@ MODEL_LIST = [
     'Transformer',
 ]
 DATASETS = [
-    ('humidity.csv', 'humidity_missing_imputation'),
-    ('temperature.csv', 'temperature_missing_imputation'),
-    ('windspeed.csv', 'windspeed_missing_imputation'),
-    ('water.csv', 'water_missing_imputation'),
+    ('humidity.csv', 'humidity'),
+    ('temperature.csv', 'temperature'),
+    ('windspeed.csv', 'windspeed'),
+    ('water.csv', 'water'),
 ]
 PREDICT_LENGTH = [
     48, 64, 80, 96, 128, 160, 192, 256, 320, 384

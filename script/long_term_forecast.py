@@ -14,21 +14,21 @@ TEMP_CONFIG_FILE_NAME = 'temp_config.ini'
 TEMP_FILE_DIR = './temp'
 
 MODEL_LIST = [
-    # 'MPformer',
-    # 'PatchTST',
-    # 'NLinear',
-    # 'FEDformer',
-    # 'Autoformer',
-    # 'Informer',
-    # 'Transformer',
-    # 'LSTM',
+    'MPformer',
+    'PatchTST',
+    'NLinear',
+    'FEDformer',
+    'Autoformer',
+    'Informer',
+    'Transformer',
+    'LSTM',
     'ARIMA',
 ]
 DATASETS = [
-    ('humidity.csv', 'humidity_missing_imputation'),
-    ('temperature.csv', 'temperature_missing_imputation'),
-    ('windspeed.csv', 'windspeed_missing_imputation'),
-    ('water.csv', 'water_missing_imputation'),
+    ('humidity.csv', 'humidity'),
+    ('temperature.csv', 'temperature'),
+    ('windspeed.csv', 'windspeed'),
+    ('water.csv', 'water'),
 ]
 PREDICT_LENGTH = [
     192, 256, 320, 384
@@ -43,7 +43,7 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['targets'] = 'list:None'
     config['CommonArgs']['date_frequence'] = 'str:h'
     config['CommonArgs']['timeenc'] = 'str:timeF'
-    config['CommonArgs']['lookback_length'] = 'int:48'
+    config['CommonArgs']['lookback_length'] = 'int:384'
     config['CommonArgs']['predict_length'] = 'str:None'
     config['CommonArgs']['train_ratio'] = 'float:0.7'
     config['CommonArgs']['vali_ratio'] = 'float:0.1'
@@ -56,7 +56,7 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['lr'] = 'float:1e-3'
     config['CommonArgs']['epochs'] = 'int:300'
     config['CommonArgs']['patience'] = 'int:5'
-    config['CommonArgs']['num_workers'] = 'int:8'
+    config['CommonArgs']['num_workers'] = 'int:0'
 
 
 def run():

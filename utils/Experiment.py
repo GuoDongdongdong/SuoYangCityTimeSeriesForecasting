@@ -118,7 +118,7 @@ class Experiment:
             if early_stop.stop:
                 logger.info("Early stopping")
                 break
-    
+
     def _vali(self) -> float:
         dataset, dataloader = data_provider(self.exp_args, 'validate')
         validation_loss_list = []

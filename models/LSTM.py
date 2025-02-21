@@ -14,13 +14,14 @@ class Model(BaseForecastModel):
 
     def evaluate(self, batch, training):
         x = batch['observed_data']
-        y = self.model.forward(x)
-        return calc_mse(x, y)
+        y = batch['predict_data']
+        predict = self.model.forward(x)
+        return calc_mse(y, predict)
     
     def forecast(self, batch):
         x = batch['observed_data']
-        y = self.model.forward(x)
-        return y
+        predict = self.model.forward(x)
+        return predict
 
 class _LSTM(nn.Module):
     def __init__(self, exp_args:ExperimentArgs):
@@ -41,7 +42,7 @@ class _LSTM(nn.Module):
             num_layers=self.num_layers,
             batch_first=True,
             dropout=self.dropout,
-            bidirectional=self.bidirectional,
+            bidirectional=bool(self.bidirectional),
         )
         self.linear = nn.Linear(self.hidden_size, self.predict_len * self.dimension)
 

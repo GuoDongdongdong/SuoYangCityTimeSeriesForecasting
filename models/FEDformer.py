@@ -18,7 +18,8 @@ class Model(BaseForecastModel):
     def __init__(self, exp_args:ExperimentArgs):
         super().__init__()
         self.model = _FEDformer(exp_args)
-    
+        self.label_length = exp_args['label_length']
+        
     def _get_inputs(self, batch:dict) -> dict:
         observed_data = batch['observed_data']
         predict_data = batch['predict_data']
@@ -42,8 +43,9 @@ class Model(BaseForecastModel):
         x_mark_enc = inputs['observed_date']
         x_dec = inputs['decoder_data']
         x_mark_dec = inputs['decoder_date']
-        y = self.model(x_enc, x_mark_enc, x_dec, x_mark_dec)
-        return calc_mse(x_enc, y)
+        predict = self.model(x_enc, x_mark_enc, x_dec, x_mark_dec)
+        y = batch['predict_data']
+        return calc_mse(y, predict)
     
     def forecast(self, batch) -> torch.Tensor:
         inputs = self._get_inputs(batch)
@@ -51,8 +53,9 @@ class Model(BaseForecastModel):
         x_mark_enc = inputs['observed_date']
         x_dec = inputs['decoder_data']
         x_mark_dec = inputs['decoder_date']
-        y = self.model(x_enc, x_mark_enc, x_dec, x_mark_dec)
-        return y
+        predict = self.model(x_enc, x_mark_enc, x_dec, x_mark_dec)
+        return predict
+    
     
 
 class _FEDformer(nn.Module):
