@@ -45,6 +45,7 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['timeenc'] = 'str:timeF'
     config['CommonArgs']['lookback_length'] = 'int:384'
     config['CommonArgs']['predict_length'] = 'str:None'
+    config['CommonArgs']['label_length'] = 'int:192'
     config['CommonArgs']['train_ratio'] = 'float:0.7'
     config['CommonArgs']['vali_ratio'] = 'float:0.1'
     config['CommonArgs']['random_seed'] = 'int:202221543'
@@ -57,6 +58,8 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['epochs'] = 'int:300'
     config['CommonArgs']['patience'] = 'int:5'
     config['CommonArgs']['num_workers'] = 'int:0'
+    config['MPformer']['patch_length'] = 'int:128'
+    config['MPformer']['patch_stride'] = 'int:64'
 
 
 def run():

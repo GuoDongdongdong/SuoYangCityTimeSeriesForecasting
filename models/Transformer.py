@@ -13,6 +13,7 @@ class Model(BaseForecastModel):
     def __init__(self, exp_args:ExperimentArgs):
         super().__init__()
         self.model = _Transformer(exp_args)
+        self.label_length = exp_args['label_length']
     
     def _get_inputs(self, batch:dict) -> dict:
         observed_data = batch['observed_data']
