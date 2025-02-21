@@ -54,10 +54,11 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['gpu_id'] = 'str:0'
     config['CommonArgs']['use_amp'] = 'bool:False'
     config['CommonArgs']['batch_size'] = 'int:32'
-    config['CommonArgs']['lr'] = 'float:1e-3'
+    config['CommonArgs']['lr'] = 'float:1e-4'
     config['CommonArgs']['epochs'] = 'int:300'
     config['CommonArgs']['patience'] = 'int:5'
     config['CommonArgs']['num_workers'] = 'int:0'
+    config['CommonArgs']['dropout'] = 'float:0.1'
     config['MPformer']['patch_length'] = 'int:128'
     config['MPformer']['patch_stride'] = 'int:64'
 

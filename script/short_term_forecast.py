@@ -33,7 +33,6 @@ DATASETS = [
 PREDICT_LENGTH = [
     1, 12, 24, 48
 ]
-
 def common_args_define(config:ConfigParser):
     config['CommonArgs']['dataset_file_dir'] = 'str:TIEGAN_dataset'
     config['CommonArgs']['dataset_file_name'] = 'str:None'
@@ -45,6 +44,7 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['timeenc'] = 'str:timeF'
     config['CommonArgs']['lookback_length'] = 'int:48'
     config['CommonArgs']['predict_length'] = 'str:None'
+    config['CommonArgs']['label_length'] = 'int:24'
     config['CommonArgs']['train_ratio'] = 'float:0.7'
     config['CommonArgs']['vali_ratio'] = 'float:0.1'
     config['CommonArgs']['random_seed'] = 'int:202221543'
@@ -53,10 +53,13 @@ def common_args_define(config:ConfigParser):
     config['CommonArgs']['gpu_id'] = 'str:0'
     config['CommonArgs']['use_amp'] = 'bool:False'
     config['CommonArgs']['batch_size'] = 'int:32'
-    config['CommonArgs']['lr'] = 'float:1e-3'
+    config['CommonArgs']['lr'] = 'float:1e-4'
     config['CommonArgs']['epochs'] = 'int:300'
     config['CommonArgs']['patience'] = 'int:5'
-    config['CommonArgs']['num_workers'] = 'int:8'
+    config['CommonArgs']['num_workers'] = 'int:0'
+    config['CommonArgs']['dropout'] = 'float:0.1'
+    config['MPformer']['patch_length'] = 'int:16'
+    config['MPformer']['patch_stride'] = 'int:8'
 
 
 def run():
