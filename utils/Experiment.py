@@ -114,6 +114,9 @@ class Experiment:
             validate_loss = self._vali()
             logger.info("epoch: {0} train loss: {1:.7f} validate Loss: {2:.7f}".format(epoch + 1, train_loss, validate_loss))
             logger.info(f'epoch: {epoch + 1} cost time: {epoch_end_time - epoch_start_time}')
+            # if we do time complexity experiment just train once.
+            if self.exp_args['time_complexity']:
+                return
             early_stop.update(validate_loss)
             if early_stop.stop:
                 logger.info("Early stopping")

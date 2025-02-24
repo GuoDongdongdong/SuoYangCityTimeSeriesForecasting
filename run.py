@@ -13,7 +13,8 @@ def main() -> None:
     experiment = Experiment(exp_args)
     if exp_args['train_test']:
         experiment.train()
-        experiment.test()
+        if not exp_args['time_complexity']:
+            experiment.test()
     else:
         model_save_path = exp_args['model_save_path']
         experiment.load_model(model_save_path)
