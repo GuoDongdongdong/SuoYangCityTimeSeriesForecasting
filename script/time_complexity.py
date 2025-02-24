@@ -21,6 +21,7 @@ MODEL_LIST = [
     'FEDformer',
     'Autoformer',
     'Informer',
+    'Reformer',
     'Transformer',
 ]
 DATASETS = [
