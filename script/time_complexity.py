@@ -45,6 +45,7 @@ def common_args_define(config:ConfigParser) -> None:
     config['CommonArgs']['timeenc'] = 'str:timeF'
     config['CommonArgs']['lookback_length'] = 'str:None'
     config['CommonArgs']['predict_length'] = 'int:48'
+    config['CommonArgs']['label_length'] = 'str:None'
     config['CommonArgs']['train_ratio'] = 'float:0.7'
     config['CommonArgs']['vali_ratio'] = 'float:0.1'
     config['CommonArgs']['random_seed'] = 'int:202221543'
@@ -129,6 +130,7 @@ if __name__ == '__main__':
                 config['CommonArgs']['dataset_file_name'] = f'str:{dataset_name}'
                 config['CommonArgs']['targets'] = f'list:{targets_name}'
                 config['CommonArgs']['lookback_length'] = f'int:{lookback_length}'
+                config['CommonArgs']['label_length'] = f'int:{lookback_length // 2}'
                 config['CommonArgs']['model'] = f'str:{model_name}'
                 if model_name == 'MPformer':
                     for mpformer in mpformer_list:

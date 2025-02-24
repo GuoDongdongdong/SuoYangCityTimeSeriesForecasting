@@ -13,7 +13,7 @@ from utils.logger import logger
 from utils.datasets import data_provider
 from models.BaseForecastModel import BaseForecastModel
 from models import ARIMA
-from models import MPformer, Autoformer, FEDformer, Informer, PatchTST, Transformer
+from models import MPformer, Autoformer, FEDformer, Informer, PatchTST, Transformer, Reformer
 from models import DLinear, NLinear
 from models import LSTM
 
@@ -25,6 +25,7 @@ MODELS = {
     'Informer'    : Informer,
     'PatchTST'    : PatchTST,
     'Transformer' : Transformer,
+    'Reformer'    : Reformer,
     'DLinear'     : DLinear,
     'NLinear'     : NLinear,
     'LSTM'        : LSTM,
