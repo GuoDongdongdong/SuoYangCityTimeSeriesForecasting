@@ -1,21 +1,19 @@
 '''
-    chapter 4 experiment 4.
-    patch length args experiment.
+    chapter 4 experiment 5.
+    patch stride args experiment.
 '''
 
 import os
 import configparser
 import subprocess
 from configparser import ConfigParser
-from matplotlib import pyplot as plt
 
 CONFIG_FILE_NAME = 'config.ini'
 CONFIG_FILE_DIR  = '.'
 TEMP_CONFIG_FILE_NAME = 'temp_config.ini'
 TEMP_FILE_DIR = './temp'
 
-PATCH_LENGTH_LIST = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180]
-
+PATCH_STRIDE_LIST = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96]
 def common_args_define(config:ConfigParser) -> None:
     config['CommonArgs']['dataset_file_dir'] = 'str:TIEGAN_dataset'
     config['CommonArgs']['dataset_file_name'] = 'str:windspeed.csv'
@@ -53,30 +51,15 @@ def run():
 def shutdown():
     os.system("/usr/bin/shutdown")
 
-def plot():
-    mae_list = [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95]
-    rmse_list = [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
-    font = {"family": "SimSun", "size": 16}
-    for x in PATCH_LENGTH_LIST:
-        plt.axvline(x, linestyle='--', color='#BFBFBF')
-    plt.xticks(PATCH_LENGTH_LIST)
-    plt.xlabel("Patch长度", fontdict=font)
-    plt.ylabel("评估指标", fontdict=font)
-    plt.plot(PATCH_LENGTH_LIST, mae_list, color='#FF4040', marker='d', label='MAE', linewidth=1.5)
-    plt.plot(PATCH_LENGTH_LIST, rmse_list, color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
-    legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
-    legend.get_frame().set_linewidth(0)
-    legend.get_frame().set_edgecolor('none')
-    plt.savefig(f'temp.svg', dpi=600)
-
 def main():
     config_file_path = os.path.join(CONFIG_FILE_DIR, CONFIG_FILE_NAME)
     config = configparser.ConfigParser()
     config.read(config_file_path)
     os.makedirs(TEMP_FILE_DIR, exist_ok=True)
-    for patch_length in PATCH_LENGTH_LIST:
+    for patch_stride in PATCH_STRIDE_LIST:
         common_args_define(config)
-        config['MPformer']['patch_length'] = f'int:{patch_length}'
+        config['MPformer']['patch_length'] = 'int:96'
+        config['MPformer']['patch_stride'] = f'int:{patch_stride}'
         with open(os.path.join(TEMP_FILE_DIR, TEMP_CONFIG_FILE_NAME), 'w') as f:
             config.write(f)
         run()
@@ -84,4 +67,4 @@ def main():
     shutdown()
 
 if __name__ == '__main__':
-    plot()
+    main()
