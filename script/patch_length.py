@@ -18,11 +18,11 @@ PATCH_LENGTH_LIST = [12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 16
 
 def common_args_define(config:ConfigParser) -> None:
     config['CommonArgs']['dataset_file_dir'] = 'str:TIEGAN_dataset'
-    config['CommonArgs']['dataset_file_name'] = 'str:windspeed.csv'
+    config['CommonArgs']['dataset_file_name'] = 'str:humidity.csv'
     config['CommonArgs']['model'] = 'str:MPformer'
     config['CommonArgs']['train_test'] = 'bool:True'
     config['CommonArgs']['model_save_path'] = 'str:None'
-    config['CommonArgs']['targets'] = 'list:windspeed'
+    config['CommonArgs']['targets'] = 'list:humidity'
     config['CommonArgs']['date_frequence'] = 'str:h'
     config['CommonArgs']['timeenc'] = 'str:timeF'
     config['CommonArgs']['lookback_length'] = 'int:192'
@@ -54,20 +54,39 @@ def shutdown():
     os.system("/usr/bin/shutdown")
 
 def plot():
-    mae_list = [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95]
-    rmse_list = [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
-    font = {"family": "SimSun", "size": 16}
-    for x in PATCH_LENGTH_LIST:
-        plt.axvline(x, linestyle='--', color='#BFBFBF')
-    plt.xticks(PATCH_LENGTH_LIST)
-    plt.xlabel("Patch长度", fontdict=font)
-    plt.ylabel("评估指标", fontdict=font)
-    plt.plot(PATCH_LENGTH_LIST, mae_list, color='#FF4040', marker='d', label='MAE', linewidth=1.5)
-    plt.plot(PATCH_LENGTH_LIST, rmse_list, color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
-    legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
-    legend.get_frame().set_linewidth(0)
-    legend.get_frame().set_edgecolor('none')
-    plt.savefig(f'temp.svg', dpi=600)
+    results = [
+        ('humidity',
+         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
+         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+        ),
+        ('temperature',
+         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
+         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+        ),
+        ('windspeed',
+         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
+         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+        ),
+        ('water',
+         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
+         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+        ),
+    ]
+    def _plot_one_dataset(mae_list, rmse_list:list) -> None:
+        font = {"family": "SimSun", "size": 16}
+        for x in PATCH_LENGTH_LIST:
+            plt.axvline(x, linestyle='--', color='#BFBFBF')
+        plt.xticks(PATCH_LENGTH_LIST)
+        plt.xlabel("Patch长度", fontdict=font)
+        plt.plot(PATCH_LENGTH_LIST, mae_list, color='#FF4040', marker='o', label='MAE', linewidth=1.5)
+        plt.plot(PATCH_LENGTH_LIST, rmse_list, color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
+        legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
+        legend.get_frame().set_linewidth(0)
+        legend.get_frame().set_edgecolor('none')
+        plt.savefig(f'patch_length.svg', dpi=600)
+    for result in results:
+        file_name, mae_list, rmse_list = result
+        _plot_one_dataset(mae_list, rmse_list)
 
 def main():
     config_file_path = os.path.join(CONFIG_FILE_DIR, CONFIG_FILE_NAME)
