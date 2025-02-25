@@ -23,9 +23,9 @@ def common_args_define(config:ConfigParser) -> None:
     config['CommonArgs']['targets'] = 'list:windspeed'
     config['CommonArgs']['date_frequence'] = 'str:h'
     config['CommonArgs']['timeenc'] = 'str:timeF'
-    config['CommonArgs']['lookback_length'] = 'str:192'
+    config['CommonArgs']['lookback_length'] = 'int:192'
     config['CommonArgs']['predict_length'] = 'int:192'
-    config['CommonArgs']['label_length'] = 'str:96'
+    config['CommonArgs']['label_length'] = 'int:96'
     config['CommonArgs']['train_ratio'] = 'float:0.7'
     config['CommonArgs']['vali_ratio'] = 'float:0.1'
     config['CommonArgs']['random_seed'] = 'int:202221543'
@@ -67,4 +67,4 @@ def main():
     shutdown()
 
 if __name__ == '__main__':
-    plot()
+    main()
