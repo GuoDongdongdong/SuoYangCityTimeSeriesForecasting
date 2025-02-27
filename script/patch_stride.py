@@ -55,37 +55,33 @@ def shutdown():
 def plot():
     results = [
         ('humidity',
-         [1.01, 0.97, 0.97, 0.97, 0.95, 0.96, 0.94, 0.94, 0.93, 0.93, 0.93, 0.93],
-         [1.27, 1.23, 1.22, 1.23, 1.20, 1.24, 1.17, 1.17, 1.16, 1.16, 1.17, 1.15]
+         [0.145, 0.127, 0.138, 0.129, 0.130, 0.121, 0.125, 0.120, 0.119, 0.121, 0.121, 0.122],
+         [0.186, 0.166, 0.177, 0.166, 0.169, 0.157, 0.162, 0.155, 0.154, 0.155, 0.156, 0.157]
         ),
         ('temperature',
-         [1.01, 0.97, 0.97, 0.97, 0.95, 0.96, 0.94, 0.94, 0.93, 0.93, 0.93, 0.93],
-         [1.27, 1.23, 1.22, 1.23, 1.20, 1.24, 1.17, 1.17, 1.16, 1.16, 1.17, 1.15]
+         [1.01, 0.971, 0.965, 0.969, 0.95, 0.96, 0.94, 0.94, 0.93, 0.93, 0.93, 0.93],
+         [1.27, 1.226, 1.222, 1.230, 1.20, 1.24, 1.17, 1.17, 1.16, 1.16, 1.17, 1.15]
         ),
         ('windspeed',
-         [1.01, 0.97, 0.97, 0.97, 0.95, 0.96, 0.94, 0.94, 0.93, 0.93, 0.93, 0.93],
-         [1.27, 1.23, 1.22, 1.23, 1.20, 1.24, 1.17, 1.17, 1.16, 1.16, 1.17, 1.15]
+         [1.010, 0.971, 0.965, 0.969, 0.948, 0.960, 0.938, 0.938, 0.930, 0.923, 0.933, 0.926],
+         [1.271, 1.226, 1.222, 1.230, 1.199, 1.238, 1.165, 1.168, 1.160, 1.149, 1.166, 1.150]
         ),
         ('water',
-         [1.01, 0.97, 0.97, 0.97, 0.95, 0.96, 0.94, 0.94, 0.93, 0.93, 0.93, 0.93],
-         [1.27, 1.23, 1.22, 1.23, 1.20, 1.24, 1.17, 1.17, 1.16, 1.16, 1.17, 1.15]
+         [0.205, 0.199, 0.196, 0.234, 0.203, 0.216, 0.199, 0.209, 0.198, 0.223, 0.198, 0.209],
+         [0.278, 0.274, 0.269, 0.317, 0.279, 0.288, 0.273, 0.287, 0.268, 0.298, 0.268, 0.276]
         ),
     ]
-    def _plot_one_dataset(mae_list, rmse_list:list) -> None:
-        font = {"family": "SimSun", "size": 16}
-        for x in PATCH_STRIDE_LIST:
-            plt.axvline(x, linestyle='--', color='#BFBFBF')
-        plt.xticks(PATCH_STRIDE_LIST)
-        plt.xlabel("Patch划分步幅", fontdict=font)
-        plt.plot(PATCH_STRIDE_LIST, mae_list, color='#FF4040', marker='d', label='MAE', linewidth=1.5)
-        plt.plot(PATCH_STRIDE_LIST, rmse_list, color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
-        legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
-        legend.get_frame().set_linewidth(0)
-        legend.get_frame().set_edgecolor('none')
-        plt.savefig(f'patch_stride.svg', dpi=600)
-    for result in results:
-        file_name, mae_list, rmse_list = result
-        _plot_one_dataset(mae_list, rmse_list)
+    font = {"family": "SimSun", "size": 16}
+    for x in PATCH_STRIDE_LIST:
+        plt.axvline(x, linestyle='--', color='#BFBFBF')
+    plt.xticks(PATCH_STRIDE_LIST)
+    plt.xlabel("Patch stride长度", fontdict=font)
+    plt.plot(PATCH_STRIDE_LIST, results[1][1], color='#FF4040', marker='o', label='MAE', linewidth=1.5)
+    plt.plot(PATCH_STRIDE_LIST, results[1][2], color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
+    legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
+    legend.get_frame().set_linewidth(0)
+    legend.get_frame().set_edgecolor('none')
+    plt.savefig(f'{results[1][0]}_patch_stride.svg', dpi=600)    
 
 def main():
     config_file_path = os.path.join(CONFIG_FILE_DIR, CONFIG_FILE_NAME)

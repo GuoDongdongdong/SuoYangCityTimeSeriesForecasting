@@ -56,37 +56,33 @@ def shutdown():
 def plot():
     results = [
         ('humidity',
-         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
-         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+         [0.603, 0.598, 0.589, 0.590, 0.614, 0.602, 0.589, 0.568, 0.573, 0.577, 0.574, 0.585, 0.593, 0.594, 0.597],
+         [0.747, 0.737, 0.724, 0.728, 0.762, 0.740, 0.726, 0.700, 0.706, 0.706, 0.711, 0.720, 0.729, 0.725, 0.729]
         ),
         ('temperature',
-         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
-         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+         [1.084, 1.078, 1.038, 0.981, 0.946, 0.948, 0.912, 0.870, 0.860, 0.868, 0.900, 0.875, 0.885, 0.885, 0.928],
+         [1.382, 1.401, 1.339, 1.272, 1.223, 1.228, 1.164, 1.111, 1.096, 1.123, 1.154, 1.130, 1.165, 1.144, 1.192]
         ),
         ('windspeed',
-         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
-         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+         [1.02, 1.02, 0.93, 0.89, 0.84, 0.82, 0.81, 0.77, 0.76, 0.77, 0.78, 0.78, 0.80, 0.79, 0.83],
+         [1.321, 1.341, 1.241, 1.171, 1.101, 1.091, 1.061, 1.011, 0.991, 1.021, 1.031, 1.031, 1.061, 1.041, 1.091]
         ),
         ('water',
-         [1.20, 1.20, 1.11, 1.07, 1.02, 1.00, 0.99, 1.01, 0.97, 0.98, 0.96, 0.98, 0.95, 0.94, 0.95],
-         [1.50, 1.52, 1.42, 1.35, 1.28, 1.27, 1.24, 1.27, 1.22, 1.24, 1.21, 1.21, 1.20, 1.17, 1.19]
+         [0.322, 0.200, 0.173, 0.159, 0.211, 0.211, 0.159, 0.153, 0.158, 0.144, 0.164, 0.154, 0.197, 0.155, 0.195],
+         [0.405, 0.263, 0.245, 0.207, 0.271, 0.271, 0.212, 0.205, 0.213, 0.216, 0.221, 0.213, 0.241, 0.207, 0.247]
         ),
     ]
-    def _plot_one_dataset(mae_list, rmse_list:list) -> None:
-        font = {"family": "SimSun", "size": 16}
-        for x in PATCH_LENGTH_LIST:
-            plt.axvline(x, linestyle='--', color='#BFBFBF')
-        plt.xticks(PATCH_LENGTH_LIST)
-        plt.xlabel("Patch长度", fontdict=font)
-        plt.plot(PATCH_LENGTH_LIST, mae_list, color='#FF4040', marker='o', label='MAE', linewidth=1.5)
-        plt.plot(PATCH_LENGTH_LIST, rmse_list, color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
-        legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
-        legend.get_frame().set_linewidth(0)
-        legend.get_frame().set_edgecolor('none')
-        plt.savefig(f'patch_length.svg', dpi=600)
-    for result in results:
-        file_name, mae_list, rmse_list = result
-        _plot_one_dataset(mae_list, rmse_list)
+    font = {"family": "SimSun", "size": 16}
+    for x in PATCH_LENGTH_LIST:
+        plt.axvline(x, linestyle='--', color='#BFBFBF')
+    plt.xticks(PATCH_LENGTH_LIST)
+    plt.xlabel("Patch长度", fontdict=font)
+    plt.plot(PATCH_LENGTH_LIST, results[3][1], color='#FF4040', marker='o', label='MAE', linewidth=1.5)
+    plt.plot(PATCH_LENGTH_LIST, results[3][2], color='#FF7F50', marker='*', label='RMSE', linewidth=1.5)
+    legend = plt.legend(loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.15))
+    legend.get_frame().set_linewidth(0)
+    legend.get_frame().set_edgecolor('none')
+    plt.savefig(f'{results[3][0]}_patch_length.svg', dpi=600)    
 
 def main():
     config_file_path = os.path.join(CONFIG_FILE_DIR, CONFIG_FILE_NAME)
